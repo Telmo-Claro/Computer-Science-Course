@@ -1,0 +1,3 @@
+2024-04-25 12:21:26;cpm_name=CodeGradeTestNorthCapacity;license_plate=XXX;action=check-in 
+2024-04-25 12:21:26;cpm_name=CodeGradeTestNorthCapacity;license_plate=YYY;action=check-in 
+2024-05-07 13:43:19;cpm_name=North Side;license_plate=q;action=check-in 

@@ -1,0 +1,11 @@
+Top Secret Document
+
+This document contains sensitive information that should not be disclosed to unauthorized persons.
+
+Sensitive words include:
+- Confidential
+- Classified
+- Secret
+- Restricted
+
+Please handle with care.

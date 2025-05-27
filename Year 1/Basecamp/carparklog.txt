@@ -1,0 +1,7 @@
+2024-05-28 14:33:30;cpm_name=North;license_plate=BB-494-H;action=check-in 
+2024-05-28 14:33:30;cpm_name=North;license_plate=HH-494-B;action=check-in 
+2024-05-28 14:36:40;cpm_name=South;license_plate=BB-495-H;action=check-in 
+2024-05-28 12:36:40;cpm_name=South;license_plate=HH-495-B;action=check-in 
+2024-05-28 14:36:40;cpm_name=South;license_plate=BB-495-H;action=check-out;parking_fee=4.0 
+2024-05-28 14:37:01;cpm_name=North;license_plate=o;action=check-in 
+2024-05-28 14:37:13;cpm_name=North;license_plate=o;action=check-out;parking_fee=2.5 

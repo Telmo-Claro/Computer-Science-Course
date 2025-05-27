@@ -1,0 +1,11 @@
+top ****** document
+
+this document contains sensitive information that should not be disclosed to unauthorized persons.
+
+sensitive words include:
+- ************
+- **********
+- ******
+- **********
+
+please handle with care.
