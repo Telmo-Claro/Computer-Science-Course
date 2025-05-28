@@ -1,0 +1,49 @@
+﻿Multidimensional arrays
+
+public interface IMultiArray
+{
+  //RowSum computes the sum of each row in a two-dimensional array arr2D and returns a one dimensional array storing the sums.
+  static abstract T[]? RowSum<T>(T[,] arr2D) where T : INumber<T>;
+
+  //ColSum computes the sum of each column in a two-dimensional array arr2D and returns a one dimensional array storing the sums.
+  static abstract T[]? ColSum<T>(T[,] arr2D) where T : INumber<T>;
+
+  //MaxRowIndexSum finds the index of the row with the maximum sum in a jagged array. 
+  //returns a Tuple<int, T> where: the first item is the index of the row with the maximum sum and the second item is the sum of that row.
+  static abstract Tuple<int, T>? MaxRowIndexSum<T>(T[][] arrJagged) where T : INumber<T>;
+
+  //MaxCol identifies the column with the maximum sum in a jagged array 
+  //returns an array of type T?[], where each element corresponds to the value in the column with the highest sum. Handle cases where columns have different lengths.
+  //Example: A jagged array might have this form (the actual one though is unknown):
+  /* 
+  var arr = new int[][]{ 
+                       new int[] {3, 21, 34, 34},
+                       new int[] {21, 0, 34},
+                       new int[] {3, 21, 34, 34, 45, -12, 11}, 
+                       null,
+                       new int[0],
+                       new int[] {3, 21}
+                     }; 
+Here the column with the highest sum will be column 2, so the result should be an array like this:  [ 34,34, 34, 0, 0, 0 ] */
+  //hint: the size of each sub-array may vary and it is a priori unknown, therefore it might be necessary to compute the maximum number of columns (in this specific case is equal to 7)
+ 
+ static abstract T?[] MaxCol<T>(T[][] arrJagged) where T : INumber<T>;
+
+/*Split takes an array of tuples, where each tuple contains three elements of type T. The method should qccept an array of Tuple<T, T, T> as input and return a jagged array T[][] with three rows, where:
+The first row contains all the first elements from the tuples.
+The second row contains all the second elements from the tuples.
+The third row contains all the third elements from the tuples.*/
+
+  static abstract T[][]? Split<T>(Tuple<T, T, T>[] input);
+
+/* Zip<T> that combines two arrays of type T[] into a two-dimensional array. The method should accept two arrays of type T[] and returns a two-dimensional array T[,], where:
+The first column contains elements from array a.
+The second column contains elements from array b.
+ hint: If the arrays have different lengths, the shorter array should be padded with the default value of T (e.g., 0 for numeric types) in the missing positions */
+  //Zip e.g  a = [1, 2, 3], b = [10, 12, 13] ==> [[1, 10], [2, 12], [3, 13]]
+  static abstract T[,]? Zip<T>(T[]? a, T[]? b);
+}
+
+    implement the interface
+
+Methods signatures should not be changed.
