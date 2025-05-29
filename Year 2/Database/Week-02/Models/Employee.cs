@@ -4,6 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/*
+ * One department -> many locations
+ * One department -> many projects
+ * One employee -> One department
+ * One employee -> Many projects
+ * One employee -> one supervisor (employee)
+ * One employee -> many supervisee
+ * One employee -> Many dependents
+ * Many employee -> works for -> One department
+ * Many employees -> works_on -> many projects
+ * One employee -> Manages -> One department
+ */
+
 public class Employee
 {
     // Scalar Properties
@@ -19,7 +32,12 @@ public class Employee
     public string Dno { get; set; }
 
     // Navigation Properties
-    public Dependent Dependent { get; set; }
-    public Department Department { get; set; }
+    public Employee Supervisor { get; set; } // Done
+    public ICollection<Employee> Supervisees { get; set; } // Done
+    public Dependent Dependent { get; set; } // Done
+    public Department ManagesDept { get; set; }
+    public Department Department { get; set; } // Done
+    public ICollection<Works_on> Works_on_Projects { get; set; }
+
 
 }

@@ -10,4 +10,6 @@ public class Project
     public string Pnumber { get; set; }
     public string Plocation { get; set; }
     public DateTime? Dnum { get; set; }
+
+    public Department Dept { get; set; }
 }

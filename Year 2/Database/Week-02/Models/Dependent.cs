@@ -14,5 +14,5 @@ public class Dependent
     public string Relationship { get; set; }
     
     // Navigation Properties
-    public ICollection<Employee> Employee { get; set; }
+    public ICollection<Employee> Employees { get; set; }
 }

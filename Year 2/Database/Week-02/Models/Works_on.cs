@@ -11,5 +11,6 @@ public class Works_on
     public int Hours { get; set; }
 
     // Navigation properties
-    public IEnumerable<Employee> Employees { get; set; }
+    public ICollection<Employee> Employees { get; set; }
+    public ICollection<Department> Departments { get; set; }>
 }
