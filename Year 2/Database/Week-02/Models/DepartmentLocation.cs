@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-public class Dept_Location
+public class DepartmentLocation
 {
-    public string Dnumber { get; set; }
-    public string Dlocation { get; set; }
+    public string DepartmentNumber { get; set; }
+    public string Location { get; set; }
 }

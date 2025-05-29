@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 public class Dependent
 {
-    // Scalar properties
-    public string Essn { get; set; }
-    public string Dependent_name { get; set; }
-    public char Sex { get; set; }
-    public DateTime Bday { get; set; }
+    public string FirstName { get; set; }
+    public string Sex { get; set; }
+    public DateTime BirthDate { get; set; }
     public string Relationship { get; set; }
-    
-    // Navigation Properties
-    public ICollection<Employee> Employees { get; set; }
+    public string EmployeeSSN { get; set; }
+
+    public IEnumerable<Employee> Employees { get; set; }
 }

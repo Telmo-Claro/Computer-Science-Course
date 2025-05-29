@@ -16,9 +16,9 @@ public class Model
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Dependent> Dependents { get; set; }
         public DbSet<Department> Departments { get; set; }
-        public DbSet<Dept_Location> Dept_Locations { get; set; }
+        public DbSet<DepartmentLocation> Dept_Locations { get; set; }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<Works_on> Works_ons { get; set; }
+        public DbSet<WorksOn> Works_ons { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -33,63 +33,32 @@ public class Model
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Employee>()
-                .HasKey(x => x.Ssn);
-
+                .HasKey(e => e.SSN);
             modelBuilder.Entity<Dependent>()
-                .HasKey(x => new{x.Essn, x.Dependent_name});
-
+                .HasKey(d => new { d.EmployeeSSN, d.FirstName });
+            modelBuilder.Entity<WorksOn>()
+                .HasKey(wo => new { wo.EmployeeSSN, wo.ProjectNumber });
+            modelBuilder.Entity<Project>()
+                .HasKey(pr => pr.Number);
+            modelBuilder.Entity<DepartmentLocation>()
+                .HasKey(ld => new { ld.DepartmentNumber, ld.Location });
             modelBuilder.Entity<Department>()
-                .HasKey(x => x.Dnumber);
-
-            modelBuilder.Entity<Dept_Location>()
-                .HasKey(x => new{x.Dnumber, x.Dlocation});
-
-            modelBuilder.Entity<Project>()
-                .HasKey(x => x.Pnumber);
-
-            modelBuilder.Entity<Works_on>()
-                .HasKey(x => new{x.Essn, x.Pno});
-
-            /*
-             * One department -> many locations
-             * One department -> many projects
-             * One employee -> One department
-             * One employee -> Many projects
-             * One employee -> one supervisor (employee)
-             * One employee -> many supervisee
-             * One employee -> Many dependents
-             * Many employee -> works for -> One department
-             * Many employees -> works_on -> many projects
-             * One employee -> Manages -> One department
-             */
+                .HasKey(d => d.Number);
 
             modelBuilder.Entity<Employee>()
-                .HasOne<Employee>(sup => sup.Supervisor)
-                .WithMany(em => em.Supervisees)
-                .HasForeignKey(k => k.Super_ssn);
+                .HasOne(e => e.Supervisor)
+                .WithMany(s => s.Supervisees)
+                .HasForeignKey(e => e.SSN);
 
             modelBuilder.Entity<Employee>()
-                .HasOne<Dependent>(dep => dep.Dependent)
-                .WithMany(em => em.Employees)
-                .HasForeignKey(k => k.Ssn);
+                .HasOne(e => e.Department)
+                .WithMany(d => d.Employees)
+                .HasForeignKey(e => e.DepartmentNumber);
 
             modelBuilder.Entity<Employee>()
-                .HasOne<Department>(dept => dept.Department)
-                .WithMany(emps => emps.EmployeesInDepartment)
-                .HasForeignKey(fk => fk.Ssn);
-
-            modelBuilder.Entity<Employee>()
-                .HasOne<Department>(dm => dm.ManagesDept)
-                .WithOne(dept => dept.Manager);
-
-            modelBuilder.Entity<Employee>()
-                .HasMany<Works_on>(x => x.Works_on_Projects)
-                .WithMany(x => x.Employees);
-
-            modelBuilder.Entity<Project>()
-                .HasOne(dp => dp.Dept)
-                .WithMany(pr => pr.ProjectsInDepartment)
-                .HasForeignKey(fk => fk.Dnum);
+                .HasOne(e => e.Dependent)
+                .WithMany(s => s.Employees)
+                .HasForeignKey(fk => fk.DependentKey);
         }
     }
 }

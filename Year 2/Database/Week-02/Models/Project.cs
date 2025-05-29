@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 public class Project
 {
-    public string Pname { get; set; }
-    public string Pnumber { get; set; }
-    public string Plocation { get; set; }
-    public DateTime? Dnum { get; set; }
-
-    public Department Dept { get; set; }
+    public string Name { get; set; }
+    public string Number { get; set; }
+    public string Location { get; set; }
+    public string DepartmentNumber { get; set; }
 }

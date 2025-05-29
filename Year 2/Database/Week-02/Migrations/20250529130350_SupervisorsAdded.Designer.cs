@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Week_02;
@@ -11,9 +12,11 @@ using Week_02;
 namespace Week_02.Migrations
 {
     [DbContext(typeof(Model.MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20250529130350_SupervisorsAdded")]
+    partial class SupervisorsAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,10 +95,6 @@ namespace Week_02.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("DepartmentNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasColumnType("text");
@@ -116,8 +115,6 @@ namespace Week_02.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("SSN");
-
-                    b.HasIndex("DepartmentNumber");
 
                     b.ToTable("Employees");
                 });
@@ -162,26 +159,13 @@ namespace Week_02.Migrations
 
             modelBuilder.Entity("Employee", b =>
                 {
-                    b.HasOne("Department", "Department")
-                        .WithMany("Employees")
-                        .HasForeignKey("DepartmentNumber")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Employee", "Supervisor")
                         .WithMany("Supervisees")
                         .HasForeignKey("SSN")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Department");
-
                     b.Navigation("Supervisor");
-                });
-
-            modelBuilder.Entity("Department", b =>
-                {
-                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("Employee", b =>
