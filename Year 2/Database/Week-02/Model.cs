@@ -51,14 +51,9 @@ public class Model
                 .HasForeignKey(e => e.SSN);
 
             modelBuilder.Entity<Employee>()
-                .HasOne(e => e.Department)
-                .WithMany(d => d.Employees)
+                .HasOne(e => e.DepartmentWorking)
+                .WithMany(dt => dt.Employees)
                 .HasForeignKey(e => e.DepartmentNumber);
-
-            modelBuilder.Entity<Employee>()
-                .HasOne(e => e.Dependent)
-                .WithMany(s => s.Employees)
-                .HasForeignKey(fk => fk.DependentKey);
         }
     }
 }

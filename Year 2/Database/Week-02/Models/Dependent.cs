@@ -12,5 +12,5 @@ public class Dependent
     public string Relationship { get; set; }
     public string EmployeeSSN { get; set; }
 
-    public IEnumerable<Employee> Employees { get; set; }
+    public IEnumerable<Employee> Dependees { get; set; }
 }

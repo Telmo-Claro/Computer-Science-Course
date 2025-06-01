@@ -11,5 +11,6 @@ public class Department
     public string ManagerSSN { get; set; }
     public  DateTime ManagerStartDate { get; set; }
 
+    public Employee DepartmentManager { get; set; }
     public IEnumerable<Employee> Employees { get; set; }
 }

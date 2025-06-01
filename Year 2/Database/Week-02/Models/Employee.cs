@@ -27,13 +27,14 @@ public class Employee
     public string Address { get; set; }
     public string Sex { get; set; }
     public int Salary { get; set; }
+    public string DepartmentNumber { get; set; }
 
     public Employee Supervisor { get; set; }
     public IEnumerable<Employee> Supervisees { get; set; }
 
-    public string DepartmentNumber { get; set; }
-    public Department Department { get; set; }
+    public Department DepartmentManaging { get; set; }
 
-    public Object DependentKey {  get; set; }
+    public Department DepartmentWorking { get; set; }
+
     public Dependent Dependent { get; set; }
 }
