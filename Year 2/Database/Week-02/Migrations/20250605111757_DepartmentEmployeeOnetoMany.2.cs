@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace Week_03.Migrations
+namespace Week_02.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateDB : Migration
+    public partial class DepartmentEmployeeOnetoMany2 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

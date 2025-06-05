@@ -5,7 +5,7 @@
 namespace Week_03.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateTables : Migration
+    public partial class DepartmentTestOne : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

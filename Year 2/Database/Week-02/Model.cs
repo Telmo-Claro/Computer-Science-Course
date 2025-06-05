@@ -46,14 +46,33 @@ public class Model
                 .HasKey(d => d.Number);
 
             modelBuilder.Entity<Employee>()
-                .HasOne(e => e.Supervisor)
+                .HasOne<Employee>(e => e.Supervisor)
                 .WithMany(s => s.Supervisees)
-                .HasForeignKey(e => e.SSN);
+                .HasForeignKey(e => e.Super_SSN);
 
             modelBuilder.Entity<Employee>()
-                .HasOne(e => e.DepartmentWorking)
-                .WithMany(dt => dt.Employees)
-                .HasForeignKey(e => e.DepartmentNumber);
+                .HasOne<Department>(x=>x.DepartmentWorking)
+                .WithMany(x => x.Employees)
+                .HasForeignKey(f => f.DepartmentNumber);
+
+            modelBuilder.Entity<Employee>()
+                .HasOne<Department>(x => x.DepartmentManaging)
+                .WithOne(y => y.DepartmentManager)
+                .HasForeignKey<Department>(f => f.ManagerSSN);
+
+            modelBuilder.Entity<WorksOn>()
+                .HasOne<Employee>(wo => wo.Employee)
+                .WithMany(e => e.Projects)
+                .HasForeignKey(wo => wo.EmployeeSSN);
+            modelBuilder.Entity<WorksOn>()
+                .HasOne<Project>(wo => wo.Project)
+                .WithMany(p => p.WorksOns)
+                .HasForeignKey(wo => wo.ProjectNumber);
+
+            modelBuilder.Entity<Project>()
+                .HasOne<Department>(p => p.Department)
+                .WithMany(d => d.Projects)
+                .HasForeignKey(p => p.DepartmentNumber);
         }
     }
 }

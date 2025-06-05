@@ -40,6 +40,9 @@ namespace Week_02.Migrations
 
                     b.HasKey("Number");
 
+                    b.HasIndex("ManagerSSN")
+                        .IsUnique();
+
                     b.ToTable("Departments");
                 });
 
@@ -92,10 +95,6 @@ namespace Week_02.Migrations
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("DepartmentManagingNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("DepartmentNumber")
                         .IsRequired()
                         .HasColumnType("text");
@@ -127,12 +126,15 @@ namespace Week_02.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Super_SSN")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("SSN");
 
-                    b.HasIndex("DepartmentManagingNumber")
-                        .IsUnique();
-
                     b.HasIndex("DepartmentNumber");
+
+                    b.HasIndex("Super_SSN");
 
                     b.HasIndex("DependentEmployeeSSN", "DependentFirstName");
 
@@ -158,6 +160,8 @@ namespace Week_02.Migrations
 
                     b.HasKey("Number");
 
+                    b.HasIndex("DepartmentNumber");
+
                     b.ToTable("Projects");
                 });
 
@@ -174,17 +178,24 @@ namespace Week_02.Migrations
 
                     b.HasKey("EmployeeSSN", "ProjectNumber");
 
+                    b.HasIndex("ProjectNumber");
+
                     b.ToTable("Works_ons");
+                });
+
+            modelBuilder.Entity("Department", b =>
+                {
+                    b.HasOne("Employee", "DepartmentManager")
+                        .WithOne("DepartmentManaging")
+                        .HasForeignKey("Department", "ManagerSSN")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DepartmentManager");
                 });
 
             modelBuilder.Entity("Employee", b =>
                 {
-                    b.HasOne("Department", "DepartmentManaging")
-                        .WithOne("DepartmentManager")
-                        .HasForeignKey("Employee", "DepartmentManagingNumber")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Department", "DepartmentWorking")
                         .WithMany("Employees")
                         .HasForeignKey("DepartmentNumber")
@@ -193,7 +204,7 @@ namespace Week_02.Migrations
 
                     b.HasOne("Employee", "Supervisor")
                         .WithMany("Supervisees")
-                        .HasForeignKey("SSN")
+                        .HasForeignKey("Super_SSN")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -203,8 +214,6 @@ namespace Week_02.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("DepartmentManaging");
-
                     b.Navigation("DepartmentWorking");
 
                     b.Navigation("Dependent");
@@ -212,12 +221,41 @@ namespace Week_02.Migrations
                     b.Navigation("Supervisor");
                 });
 
-            modelBuilder.Entity("Department", b =>
+            modelBuilder.Entity("Project", b =>
                 {
-                    b.Navigation("DepartmentManager")
+                    b.HasOne("Department", "Department")
+                        .WithMany("Projects")
+                        .HasForeignKey("DepartmentNumber")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("WorksOn", b =>
+                {
+                    b.HasOne("Employee", "Employee")
+                        .WithMany("Projects")
+                        .HasForeignKey("EmployeeSSN")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Project", "Project")
+                        .WithMany("WorksOns")
+                        .HasForeignKey("ProjectNumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
+
+                    b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("Department", b =>
+                {
                     b.Navigation("Employees");
+
+                    b.Navigation("Projects");
                 });
 
             modelBuilder.Entity("Dependent", b =>
@@ -227,7 +265,17 @@ namespace Week_02.Migrations
 
             modelBuilder.Entity("Employee", b =>
                 {
+                    b.Navigation("DepartmentManaging")
+                        .IsRequired();
+
+                    b.Navigation("Projects");
+
                     b.Navigation("Supervisees");
+                });
+
+            modelBuilder.Entity("Project", b =>
+                {
+                    b.Navigation("WorksOns");
                 });
 #pragma warning restore 612, 618
         }
