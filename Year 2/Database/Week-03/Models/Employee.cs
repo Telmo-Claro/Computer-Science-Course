@@ -20,25 +20,21 @@ using System.Threading.Tasks;
 
 public class Employee
 {
-    public string SSN { get; set; } // Primary Key
-    public string FirstName { get; set; }
-    public string MiddleInitials { get; set; }
-    public string LastName { get; set; }
+    public required string SSN { get; set; } // Primary Key
+    public required string FirstName { get; set; }
+    public string? MiddleInitials { get; set; }
+    public required string LastName { get; set; }
     public DateTime BirthDate { get; set; }
-    public string Address { get; set; }
-    public string Sex { get; set; }
+    public required string Address { get; set; }
+    public required string Sex { get; set; }
     public int Salary { get; set; }
-    public string Super_SSN { get; set; }
-    public string DepartmentNumber { get; set; }
-    //[ForeignKey("Super_SSN"), Column(TypeName = "char(9)")]
-    public Employee Supervisor { get; set; }
-    public IEnumerable<Employee> Supervisees { get; set; }
+    public string? Super_SSN { get; set; }
+    public string? DepartmentNumber { get; set; }
 
-    public Department DepartmentManaging { get; set; }
-
-    public Department DepartmentWorking { get; set; }
-
-    public Dependent Dependent { get; set; }
-
-    public IEnumerable<WorksOn> Projects { get; set; }
+    public Employee? Supervisor { get; set; }
+    public IEnumerable<Employee>? Supervisees { get; set; }
+    public Department? DepartmentManaging { get; set; }
+    public Department? DepartmentWorking { get; set; }
+    public Dependent? Dependent { get; set; }
+    public IEnumerable<WorksOn>? Projects { get; set; }
 }

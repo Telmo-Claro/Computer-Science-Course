@@ -6,6 +6,6 @@ using System.Threading.Tasks;
 
 public class DepartmentLocation
 {
-    public string DepartmentNumber { get; set; }
-    public string Location { get; set; }
+    public required string DepartmentNumber { get; set; }
+    public required string Location { get; set; }
 }

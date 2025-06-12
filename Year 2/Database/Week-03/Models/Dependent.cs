@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 public class Dependent
 {
-    public string FirstName { get; set; }
-    public string Sex { get; set; }
+    public required string FirstName { get; set; }
+    public required string Sex { get; set; }
     public DateTime BirthDate { get; set; }
-    public string Relationship { get; set; }
-    public string EmployeeSSN { get; set; }
+    public string? Relationship { get; set; }
+    public string? EmployeeSSN { get; set; }
 
-    public IEnumerable<Employee> Dependees { get; set; }
+    public IEnumerable<Employee>? Dependees { get; set; }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -10,9 +11,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Week_03.Migrations
 {
     [DbContext(typeof(Model.MyContext))]
-    partial class MyContextModelSnapshot : ModelSnapshot
+    [Migration("20250612110200_MakeManagerOptional")]
+    partial class MakeManagerOptional
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,6 +72,7 @@ namespace Week_03.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Relationship")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Sex")
@@ -93,12 +97,15 @@ namespace Week_03.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("DepartmentNumber")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("DependentEmployeeSSN")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("DependentFirstName")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("FirstName")
@@ -110,6 +117,7 @@ namespace Week_03.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("MiddleInitials")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("Salary")
@@ -120,6 +128,7 @@ namespace Week_03.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Super_SSN")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("SSN");
@@ -139,6 +148,7 @@ namespace Week_03.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("DepartmentNumber")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Location")
@@ -164,7 +174,7 @@ namespace Week_03.Migrations
                     b.Property<string>("ProjectNumber")
                         .HasColumnType("text");
 
-                    b.Property<int?>("Hours")
+                    b.Property<int>("Hours")
                         .HasColumnType("integer");
 
                     b.HasKey("EmployeeSSN", "ProjectNumber");
@@ -187,15 +197,21 @@ namespace Week_03.Migrations
                 {
                     b.HasOne("Department", "DepartmentWorking")
                         .WithMany("Employees")
-                        .HasForeignKey("DepartmentNumber");
+                        .HasForeignKey("DepartmentNumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Employee", "Supervisor")
                         .WithMany("Supervisees")
-                        .HasForeignKey("Super_SSN");
+                        .HasForeignKey("Super_SSN")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Dependent", "Dependent")
                         .WithMany("Dependees")
-                        .HasForeignKey("DependentEmployeeSSN", "DependentFirstName");
+                        .HasForeignKey("DependentEmployeeSSN", "DependentFirstName")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("DepartmentWorking");
 
@@ -208,7 +224,9 @@ namespace Week_03.Migrations
                 {
                     b.HasOne("Department", "Department")
                         .WithMany("Projects")
-                        .HasForeignKey("DepartmentNumber");
+                        .HasForeignKey("DepartmentNumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Department");
                 });
@@ -246,7 +264,8 @@ namespace Week_03.Migrations
 
             modelBuilder.Entity("Employee", b =>
                 {
-                    b.Navigation("DepartmentManaging");
+                    b.Navigation("DepartmentManaging")
+                        .IsRequired();
 
                     b.Navigation("Projects");
 

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 public class WorksOn
 {
-    public string EmployeeSSN { get; set; }
-    public string ProjectNumber { get; set; }
-    public int Hours { get; set; }
+    public required string EmployeeSSN { get; set; }
+    public required string ProjectNumber { get; set; }
+    public int? Hours { get; set; }
 
-    public Employee Employee { get; set; }
-    public Project Project { get; set; }
+    public Employee? Employee { get; set; }
+    public Project? Project { get; set; }
 }
