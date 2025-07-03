@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Model
 {
- 
     public class TrialContext : DbContext
     {
 

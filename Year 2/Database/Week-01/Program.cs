@@ -10,7 +10,6 @@ class Program
         using var context = new TrialContext();
         context.Database.EnsureCreated();
 
-        //ToDo Complete CreateDB:
         string CreateDB = @"
                 DROP TABLE IF EXISTS EMPLOYEE CASCADE ;
                 DROP TABLE IF EXISTS DEPARTMENT CASCADE ;
@@ -78,8 +77,8 @@ class Program
                   PRIMARY KEY (Essn, Dependent_name),
                   FOREIGN KEY (Essn) REFERENCES EMPLOYEE(Ssn) 
                 );
-
                 ";
+
         string SeedDB = @"
 
                 --DEPARTMENT -Insert (with null values for Manager)

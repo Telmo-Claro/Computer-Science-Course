@@ -88,23 +88,20 @@ public class Graph
         // Loop until stack is empty
         while (stack.Count > 0)
         {
-            // pop a node from the stack
-            var node = stack.Pop();
-      
-            // check if current node is not visited yet
-            if (visited[node] == false)
+            var current = stack.Pop();
+
+            if (!visited[current])
             {
-                visited[node] = true;
-                // add current node to the string (followed by a space) and set it to visited
-                toReturn += node + " ";
-                // find neighbors (in reversed order) of current  
-                var neighbors = NeighborsReversed(node);
-                // push all neighbors      
-                foreach (var neighbor in neighbors)
+                toReturn += current + " ";
+                visited[current] = true;
+                // get the neighbors
+                var neighbors = NeighborsReversed(current);
+                foreach(var neighbor in neighbors)
                 {
                     stack.Push(neighbor);
                 }
             }
+
         }
         return toReturn;
     }
@@ -121,6 +118,7 @@ public class Graph
         {
             // default distance: double.PositiveInfinity
             // default previous node: -1
+            // Fill the distance, previous and unvisited nodes
             distance[i] = double.PositiveInfinity;
             prev[i] = -1;
             unvisitedNodes.Add(i);

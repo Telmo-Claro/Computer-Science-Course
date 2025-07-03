@@ -1,60 +1,55 @@
 ﻿namespace ToDo;
+
 public class Sort<T> : ISort<T> where T : IComparable<T>
 {
-    public static void BubbleSort(T[] data)
-    {
-        var n = data.Length;
-        for(int i = 0; i < n - 1; i++)
-        {
-            for(int j = 0; j < n - i - 1; j++)
-            {
-                if(data[j].CompareTo(data[j + 1]) > 0)
-                {
-                    (data[j], data[j + 1]) = (data[j + 1], data[j]);
-                }
-            }
-        }
-    }
-
     public static void InsertionSort(T[] data)
     {
         for(int i = 1; i < data.Length; i++)
         {
-            var key = data[i];
-            var flag = 0;
-            for(int j = i - 1; j >= 0 && flag != 1;)
+            T temp = data[i];
+            int j = i - 1; // keeps track of the value on the left of temp
+            while (j >= 0 && data[j].CompareTo(temp) > 0)
             {
-                if(key.CompareTo(data[j]) < 0)
+                data[j + 1] = data[j];
+                j--;
+            }
+            data[j + 1] = temp;
+        }
+    }
+
+    public static void BubbleSort(T[] data)
+    {
+        for(int i = 0; i < data.Length - 1; i++)
+        {
+            for(int j = 0; j < data.Length - i - 1; j++)
+            {
+                if(data[j].CompareTo(data[j + 1]) > 0)
                 {
-                    data[j + 1] = data[j];
-                    j--;
-                    data[j + 1] = key;
-                }
-                else
-                {
-                    flag = 1;
+                    T temp = data[j];
+                    data[j] = data[j + 1];
+                    data[j + 1] = temp;
                 }
             }
         }
     }
 
-    public static void MergeSort(T[] array, int low, int high)
+    public static void MergeSort(T[] array, int left, int right)
     {
-        if (low < high)
+        if (left < right)
         {
-            int middle = low + (high - low) / 2;
+            int middle = left + (right - left) / 2;
 
-            MergeSort(array, low, middle);
-            MergeSort(array, middle + 1, high);
+            MergeSort(array, left, middle);
+            MergeSort(array, middle + 1, right);
 
-            Merge(array, low, middle, high);
+            Merge(array, left, middle, right);
         }
     }
 
-    public static void Merge(T[] array, int low, int middle, int high) // q p r
+    public static void Merge(T[] array, int left, int middle, int right)
     {
-        var leftSize = middle - low + 1;
-        var rightSize = high - middle;
+        var leftSize = middle - left + 1;
+        var rightSize = right - middle;
         var arrayLeft = new T[leftSize];
         var arrayRight = new T[rightSize];
 
@@ -63,7 +58,7 @@ public class Sort<T> : ISort<T> where T : IComparable<T>
 
         for (i = 0; i < leftSize; ++i) 
         {
-            arrayLeft[i] = array[low + i];
+            arrayLeft[i] = array[left + i];
         }
         for (j = 0; j < rightSize; ++j)
         {
@@ -72,7 +67,7 @@ public class Sort<T> : ISort<T> where T : IComparable<T>
 
         i = 0;
         j = 0;
-        int k = low;
+        int k = left;
 
         while(i < leftSize && j < rightSize)
         {

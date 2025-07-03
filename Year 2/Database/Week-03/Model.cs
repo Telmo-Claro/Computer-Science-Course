@@ -1,6 +1,8 @@
-using System.ComponentModel.DataAnnotations;
-using System.Security.Cryptography.X509Certificates;
 using Microsoft.EntityFrameworkCore;
+using Week_03.Models;
+
+namespace Week_03;
+
 public class Model
 {
     public class MyContext : DbContext

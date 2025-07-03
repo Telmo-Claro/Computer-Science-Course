@@ -1,4 +1,7 @@
-﻿class Program
+﻿
+namespace Week_02;
+
+static class Program
 {
     static void Main(string[] args)
     {

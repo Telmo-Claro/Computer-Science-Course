@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Week_03.Models;
 
 /*
  * One department -> many locations
@@ -17,6 +18,7 @@ using System.Threading.Tasks;
  * Many employees -> works_on -> many projects
  * One employee -> Manages -> One department
  */
+namespace Week_03.Models;
 
 public class Employee
 {

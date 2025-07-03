@@ -4,20 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-/*
- * One department -> many locations
- * One department -> many projects
- * One employee -> One department
- * One employee -> Many projects
- * One employee -> one supervisor (employee)
- * One employee -> many supervisee
- * One employee -> Many dependents
- * Many employee -> works for -> One department
- * Many employees -> works_on -> many projects
- * One employee -> Manages -> One department
- */
-
+namespace Week_02.Models;
 public class Employee
 {
     public string SSN { get; set; } // Primary Key
@@ -30,15 +17,4 @@ public class Employee
     public int Salary { get; set; }
     public string Super_SSN { get; set; }
     public string DepartmentNumber { get; set; }
-    //[ForeignKey("Super_SSN"), Column(TypeName = "char(9)")]
-    public Employee Supervisor { get; set; }
-    public IEnumerable<Employee> Supervisees { get; set; }
-
-    public Department DepartmentManaging { get; set; }
-
-    public Department DepartmentWorking { get; set; }
-
-    public Dependent Dependent { get; set; }
-
-    public IEnumerable<WorksOn> Projects { get; set; }
 }

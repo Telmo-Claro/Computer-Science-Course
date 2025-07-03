@@ -22,7 +22,7 @@ namespace Week_02.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Department", b =>
+            modelBuilder.Entity("Week_02.Models.Department", b =>
                 {
                     b.Property<string>("Number")
                         .HasColumnType("text");
@@ -40,13 +40,10 @@ namespace Week_02.Migrations
 
                     b.HasKey("Number");
 
-                    b.HasIndex("ManagerSSN")
-                        .IsUnique();
-
                     b.ToTable("Departments");
                 });
 
-            modelBuilder.Entity("DepartmentLocation", b =>
+            modelBuilder.Entity("Week_02.Models.DepartmentLocation", b =>
                 {
                     b.Property<string>("DepartmentNumber")
                         .HasColumnType("text");
@@ -59,7 +56,7 @@ namespace Week_02.Migrations
                     b.ToTable("Dept_Locations");
                 });
 
-            modelBuilder.Entity("Dependent", b =>
+            modelBuilder.Entity("Week_02.Models.Dependent", b =>
                 {
                     b.Property<string>("EmployeeSSN")
                         .HasColumnType("text");
@@ -83,7 +80,7 @@ namespace Week_02.Migrations
                     b.ToTable("Dependents");
                 });
 
-            modelBuilder.Entity("Employee", b =>
+            modelBuilder.Entity("Week_02.Models.Employee", b =>
                 {
                     b.Property<string>("SSN")
                         .HasColumnType("text");
@@ -96,14 +93,6 @@ namespace Week_02.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("DepartmentNumber")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("DependentEmployeeSSN")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("DependentFirstName")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -136,12 +125,10 @@ namespace Week_02.Migrations
 
                     b.HasIndex("Super_SSN");
 
-                    b.HasIndex("DependentEmployeeSSN", "DependentFirstName");
-
                     b.ToTable("Employees");
                 });
 
-            modelBuilder.Entity("Project", b =>
+            modelBuilder.Entity("Week_02.Models.Project", b =>
                 {
                     b.Property<string>("Number")
                         .HasColumnType("text");
@@ -165,7 +152,7 @@ namespace Week_02.Migrations
                     b.ToTable("Projects");
                 });
 
-            modelBuilder.Entity("WorksOn", b =>
+            modelBuilder.Entity("Week_02.Models.WorksOn", b =>
                 {
                     b.Property<string>("EmployeeSSN")
                         .HasColumnType("text");
@@ -183,99 +170,61 @@ namespace Week_02.Migrations
                     b.ToTable("Works_ons");
                 });
 
-            modelBuilder.Entity("Department", b =>
+            modelBuilder.Entity("Week_02.Models.DepartmentLocation", b =>
                 {
-                    b.HasOne("Employee", "DepartmentManager")
-                        .WithOne("DepartmentManaging")
-                        .HasForeignKey("Department", "ManagerSSN")
+                    b.HasOne("Week_02.Models.Department", null)
+                        .WithMany()
+                        .HasForeignKey("DepartmentNumber")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("DepartmentManager");
                 });
 
-            modelBuilder.Entity("Employee", b =>
+            modelBuilder.Entity("Week_02.Models.Dependent", b =>
                 {
-                    b.HasOne("Department", "DepartmentWorking")
-                        .WithMany("Employees")
+                    b.HasOne("Week_02.Models.Employee", null)
+                        .WithMany()
+                        .HasForeignKey("EmployeeSSN")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Week_02.Models.Employee", b =>
+                {
+                    b.HasOne("Week_02.Models.Department", null)
+                        .WithMany()
                         .HasForeignKey("DepartmentNumber")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Employee", "Supervisor")
-                        .WithMany("Supervisees")
+                    b.HasOne("Week_02.Models.Employee", null)
+                        .WithMany()
                         .HasForeignKey("Super_SSN")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Dependent", "Dependent")
-                        .WithMany("Dependees")
-                        .HasForeignKey("DependentEmployeeSSN", "DependentFirstName")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("DepartmentWorking");
-
-                    b.Navigation("Dependent");
-
-                    b.Navigation("Supervisor");
                 });
 
-            modelBuilder.Entity("Project", b =>
+            modelBuilder.Entity("Week_02.Models.Project", b =>
                 {
-                    b.HasOne("Department", "Department")
-                        .WithMany("Projects")
+                    b.HasOne("Week_02.Models.Department", null)
+                        .WithMany()
                         .HasForeignKey("DepartmentNumber")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Department");
                 });
 
-            modelBuilder.Entity("WorksOn", b =>
+            modelBuilder.Entity("Week_02.Models.WorksOn", b =>
                 {
-                    b.HasOne("Employee", "Employee")
-                        .WithMany("Projects")
+                    b.HasOne("Week_02.Models.Employee", null)
+                        .WithMany()
                         .HasForeignKey("EmployeeSSN")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Project", "Project")
-                        .WithMany("WorksOns")
+                    b.HasOne("Week_02.Models.Project", null)
+                        .WithMany()
                         .HasForeignKey("ProjectNumber")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Employee");
-
-                    b.Navigation("Project");
-                });
-
-            modelBuilder.Entity("Department", b =>
-                {
-                    b.Navigation("Employees");
-
-                    b.Navigation("Projects");
-                });
-
-            modelBuilder.Entity("Dependent", b =>
-                {
-                    b.Navigation("Dependees");
-                });
-
-            modelBuilder.Entity("Employee", b =>
-                {
-                    b.Navigation("DepartmentManaging")
-                        .IsRequired();
-
-                    b.Navigation("Projects");
-
-                    b.Navigation("Supervisees");
-                });
-
-            modelBuilder.Entity("Project", b =>
-                {
-                    b.Navigation("WorksOns");
                 });
 #pragma warning restore 612, 618
         }

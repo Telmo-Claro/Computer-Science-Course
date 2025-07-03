@@ -1,6 +1,8 @@
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Cryptography.X509Certificates;
 using Microsoft.EntityFrameworkCore;
+using Week_02.Models;
 
 namespace Week_02;
 
@@ -34,45 +36,57 @@ public class Model
         {
             modelBuilder.Entity<Employee>()
                 .HasKey(e => e.SSN);
-            modelBuilder.Entity<Dependent>()
-                .HasKey(d => new { d.EmployeeSSN, d.FirstName });
-            modelBuilder.Entity<WorksOn>()
-                .HasKey(wo => new { wo.EmployeeSSN, wo.ProjectNumber });
-            modelBuilder.Entity<Project>()
-                .HasKey(pr => pr.Number);
-            modelBuilder.Entity<DepartmentLocation>()
-                .HasKey(ld => new { ld.DepartmentNumber, ld.Location });
+
             modelBuilder.Entity<Department>()
                 .HasKey(d => d.Number);
 
-            modelBuilder.Entity<Employee>()
-                .HasOne<Employee>(e => e.Supervisor)
-                .WithMany(s => s.Supervisees)
-                .HasForeignKey(e => e.Super_SSN);
-
-            modelBuilder.Entity<Employee>()
-                .HasOne<Department>(x=>x.DepartmentWorking)
-                .WithMany(x => x.Employees)
-                .HasForeignKey(f => f.DepartmentNumber);
-
-            modelBuilder.Entity<Employee>()
-                .HasOne<Department>(x => x.DepartmentManaging)
-                .WithOne(y => y.DepartmentManager)
-                .HasForeignKey<Department>(f => f.ManagerSSN);
-
-            modelBuilder.Entity<WorksOn>()
-                .HasOne<Employee>(wo => wo.Employee)
-                .WithMany(e => e.Projects)
-                .HasForeignKey(wo => wo.EmployeeSSN);
-            modelBuilder.Entity<WorksOn>()
-                .HasOne<Project>(wo => wo.Project)
-                .WithMany(p => p.WorksOns)
-                .HasForeignKey(wo => wo.ProjectNumber);
+            modelBuilder.Entity<DepartmentLocation>()
+                .HasKey(ld => new { ld.DepartmentNumber, ld.Location });
 
             modelBuilder.Entity<Project>()
-                .HasOne<Department>(p => p.Department)
-                .WithMany(d => d.Projects)
-                .HasForeignKey(p => p.DepartmentNumber);
+                .HasKey(pr => pr.Number);
+
+            modelBuilder.Entity<WorksOn>()
+                .HasKey(wo => new { wo.EmployeeSSN, wo.ProjectNumber });
+
+            modelBuilder.Entity<Dependent>()
+                .HasKey(d => new { d.EmployeeSSN, d.FirstName });
+
+            // one-to-one with Department
+            modelBuilder.Entity<Employee>()
+                .HasOne<Department>()
+                .WithMany()
+                .HasForeignKey(d => d.DepartmentNumber);
+
+            modelBuilder.Entity<Employee>()
+                .HasOne<Employee>()
+                .WithMany()
+                .HasForeignKey(e => e.Super_SSN);
+
+            modelBuilder.Entity<DepartmentLocation>()
+                .HasOne<Department>()
+                .WithMany()
+                .HasForeignKey(d => d.DepartmentNumber);
+
+            modelBuilder.Entity<Project>()
+                .HasOne<Department>()
+                .WithMany()
+                .HasForeignKey(d => d.DepartmentNumber);
+
+            // many-to-many
+            modelBuilder.Entity<WorksOn>()
+                .HasOne<Employee>()
+                .WithMany()
+                .HasForeignKey(e => e.EmployeeSSN);
+            modelBuilder.Entity<WorksOn>()
+                .HasOne<Project>()
+                .WithMany()
+                .HasForeignKey(p => p.ProjectNumber);
+
+            modelBuilder.Entity<Dependent>()
+                .HasOne<Employee>()
+                .WithMany()
+                .HasForeignKey(d => d.EmployeeSSN);
         }
     }
 }

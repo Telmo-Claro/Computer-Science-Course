@@ -3,6 +3,10 @@
  * Insert, Delete, Update
  */
 
+using Week_03.Models;
+
+namespace Week_03;
+
 class Program
 {
     static void Main(string[] args)

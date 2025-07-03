@@ -10,11 +10,10 @@ services:
       POSTGRES_HOST_AUTH_METHOD: trust
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./scripts:/scripts
     networks:
       - mynetwork
     logging:
-      driver: json-file
+      driver: none
 
   pgadmin:
     image: dpage/pgadmin4
@@ -26,13 +25,12 @@ services:
       - '8081:80'
     volumes:
       - pgadmin-data:/var/lib/pgadmin
-      - ./scripts:/scripts
     depends_on:
       - "postgres"
     networks:
       - mynetwork
     logging:
-      driver: json-file
+      driver: none
 
 volumes:
   pgdata:

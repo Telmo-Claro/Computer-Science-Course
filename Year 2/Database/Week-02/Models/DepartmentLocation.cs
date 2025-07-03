@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+namespace Week_02.Models;
 public class DepartmentLocation
 {
     public string DepartmentNumber { get; set; }
