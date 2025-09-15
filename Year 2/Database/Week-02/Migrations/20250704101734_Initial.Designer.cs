@@ -12,15 +12,15 @@ using Week_02;
 namespace Week_02.Migrations
 {
     [DbContext(typeof(Model.MyContext))]
-    [Migration("20250703192732_Init")]
-    partial class Init
+    [Migration("20250704101734_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.4")
+                .HasAnnotation("ProductVersion", "9.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);

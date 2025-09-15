@@ -7,10 +7,15 @@ namespace Week_03.Models;
 
 public class WorksOn
 {
-    public required string EmployeeSSN { get; set; }
-    public required string ProjectNumber { get; set; }
+    public string EmployeeSSN { get; set; }
+    public int ProjectNumber { get; set; }
     public int? Hours { get; set; }
+    
+    public WorksOn(string Essn, int Pno, int Hours)
+    { 
+        this.EmployeeSSN = Essn;
+        this.ProjectNumber = Pno;
+        this.Hours = Hours;    
+    }
 
-    public Employee? Employee { get; set; }
-    public Project? Project { get; set; }
 }

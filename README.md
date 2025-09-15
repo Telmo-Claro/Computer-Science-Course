@@ -1,6 +1,6 @@
 # University Computer Science Portfolio
 
-This repository contains my coursework and projects from the Computer Science program at the University of Applied Sciences of Rotterdam (Hogeschool Rotterdam).
+This repository contains my coursework and projects from the Computer Science program at the Rotterdam University of Applied Sciences (Hogeschool Rotterdam).
 
 ## Repository Structure
 
@@ -21,6 +21,7 @@ This repository contains my coursework and projects from the Computer Science pr
   - Dynamic Programming
 - **Database**: PostgreSQL database projects using Docker and Entity Framework
 - **Networking**: UDP-based client-server application
+- **Security System**: Python program with security concepts
 
 ## Technologies Used
 - C#/.NET

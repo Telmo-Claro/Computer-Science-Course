@@ -8,11 +8,8 @@ namespace Week_03.Models;
 
 public class Project
 {
-    public required string Name { get; set; }
-    public required string Number { get; set; }
-    public required string Location { get; set; }
-    public string? DepartmentNumber { get; set; }
-
-    public IEnumerable<WorksOn>? WorksOns { get; set; }
-    public Department? Department { get; set; }
+    public string Name { get; set; }
+    public int Number { get; set; }
+    public string Location { get; set; }
+    public int DepartmentNumber { get; set; }
 }

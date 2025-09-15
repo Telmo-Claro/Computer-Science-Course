@@ -7,6 +7,17 @@ namespace Week_03.Models;
 
 public class DepartmentLocation
 {
-    public required string DepartmentNumber { get; set; }
-    public required string Location { get; set; }
+    // Parameterless constructor required by EF Core
+    public DepartmentLocation() { }
+    public DepartmentLocation(int Dno, string Dlocation) {
+        this.DepartmentNumber = Dno;
+        this.Location = Dlocation;
+    }
+    
+    public int DepartmentNumber { get; set; }
+    public string Location { get; set; }
+    
+
+    
+
 }
